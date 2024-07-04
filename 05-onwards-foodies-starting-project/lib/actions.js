@@ -2,13 +2,12 @@
 
 import { redirect } from 'next/navigation';
 import { saveMeal } from './meals';
-import { isValidElement } from 'react';
 
-function inValidText(text) {
-  return !meal.title || meal.title.trim() === '';
+function isValidText(text) {
+  return !text.title || text.title.trim() === '';
 }
 
-export async function shareMeal(formData) {
+export async function shareMeal(prevState, formData) {
   const meal = {
     title: formData.get('title'),
     summary: formData.get('summary'),
@@ -19,16 +18,19 @@ export async function shareMeal(formData) {
   };
 
   if (
-    inValidText(meal.title) ||
-    isValidElement(meal.summary) ||
-    isValidElement(meal.instructions) ||
-    isValidElement(meal.creator) ||
-    isValidElement(meal.creator_email) ||
+    isValidText(meal.title) ||
+    isValidText(meal.summary) ||
+    isValidText(meal.instructions) ||
+    isValidText(meal.creator) ||
+    isValidText(meal.creator_email) ||
     !meal.creator_email.includes('@') ||
     !meal.image ||
     meal.images.size === 0
   ) {
-    throw new Error('Invalid Input');
+    // throw new Error('Invalid Input');
+    return {
+      message: 'Invalid input',
+    };
   }
 
   await saveMeal(meal);
