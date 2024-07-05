@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { saveMeal } from './meals';
 
 function isValidText(text) {
-  return !text.title || text.title.trim() === '';
+  return !text || text.trim() === '';
 }
 
 export async function shareMeal(prevState, formData) {
@@ -16,7 +16,6 @@ export async function shareMeal(prevState, formData) {
     creator: formData.get('name'),
     creator_email: formData.get('email'),
   };
-
   if (
     isValidText(meal.title) ||
     isValidText(meal.summary) ||
@@ -25,7 +24,7 @@ export async function shareMeal(prevState, formData) {
     isValidText(meal.creator_email) ||
     !meal.creator_email.includes('@') ||
     !meal.image ||
-    meal.images.size === 0
+    meal.image.size === 0
   ) {
     // throw new Error('Invalid Input');
     return {
