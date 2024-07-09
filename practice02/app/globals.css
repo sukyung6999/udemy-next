@@ -131,6 +131,10 @@ ul {
   background-color: #2d2d2b;
 }
 
+.fullscreen-image img {
+  width: 100%;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
